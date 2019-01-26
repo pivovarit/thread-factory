@@ -41,7 +41,7 @@ public final class ThreadFactoryBuilder {
     }
 
     public ThreadFactoryBuilder setThreadFactory(ThreadFactory backingThreadFactory) {
-        this.backingThreadFactory = Objects.requireNonNull((backingThreadFactory);
+        this.backingThreadFactory = Objects.requireNonNull((backingThreadFactory));
         return this;
     }
 
