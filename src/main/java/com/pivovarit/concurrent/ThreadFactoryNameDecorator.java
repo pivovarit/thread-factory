@@ -34,7 +34,7 @@ class ThreadFactoryNameDecorator implements ThreadFactory {
     @Override
     public Thread newThread(Runnable task) {
         Thread thread = defaultThreadFactory.newThread(task);
-        thread.setName(prefix + thread.getName() + suffix);
+        thread.setName(prefix + "-" + thread.getName() + "-" + suffix);
         return thread;
     }
 }

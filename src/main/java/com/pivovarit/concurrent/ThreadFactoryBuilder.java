@@ -8,30 +8,19 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicLong;
 
 public final class ThreadFactoryBuilder {
-    private String nameFormat = null;
+
+    private final String nameFormat;
+
     private Boolean daemon = null;
-    private Integer priority = null;
     private UncaughtExceptionHandler uncaughtExceptionHandler = null;
     private ThreadFactory backingThreadFactory = null;
 
-    public ThreadFactoryBuilder() {
-    }
-
-    public ThreadFactoryBuilder setNameFormat(String nameFormat) {
+    public ThreadFactoryBuilder(String nameFormat) {
         this.nameFormat = nameFormat;
-        return this;
     }
 
     public ThreadFactoryBuilder setDaemon(boolean daemon) {
         this.daemon = daemon;
-        return this;
-    }
-
-    public ThreadFactoryBuilder setPriority(int priority) {
-        if (priority <= 1 || priority >= 10) {
-            throw new IllegalArgumentException("Thread priority must be between 1 and 10");
-        }
-        this.priority = priority;
         return this;
     }
 
@@ -46,37 +35,29 @@ public final class ThreadFactoryBuilder {
     }
 
     public ThreadFactory build() {
-        return build(this);
-    }
-
-    private static ThreadFactory build(ThreadFactoryBuilder builder) {
-        final String nameFormat = builder.nameFormat;
-        final Boolean daemon = builder.daemon;
-        final Integer priority = builder.priority;
-        final UncaughtExceptionHandler uncaughtExceptionHandler = builder.uncaughtExceptionHandler;
-        final ThreadFactory backingThreadFactory = builder.backingThreadFactory != null ? builder.backingThreadFactory : Executors.defaultThreadFactory();
-        final AtomicLong count = nameFormat != null ? new AtomicLong(0L) : null;
+        final String nameFormat1 = nameFormat;
+        final Boolean daemon1 = daemon;
+        final UncaughtExceptionHandler uncaughtExceptionHandler1 = uncaughtExceptionHandler;
+        final ThreadFactory backingThreadFactory1 = backingThreadFactory != null ? backingThreadFactory : Executors.defaultThreadFactory();
+        final AtomicLong count = nameFormat1 != null ? new AtomicLong(0L) : null;
         return runnable -> {
-            Thread thread = backingThreadFactory.newThread(runnable);
-            if (nameFormat != null) {
-                thread.setName(ThreadFactoryBuilder.format(nameFormat, count.getAndIncrement()));
+            Thread thread = backingThreadFactory1.newThread(runnable);
+            if (nameFormat1 != null) {
+                thread.setName(ThreadFactoryBuilder.format(nameFormat1, count.getAndIncrement()));
             }
 
-            if (daemon != null) {
-                thread.setDaemon(daemon);
+            if (daemon1 != null) {
+                thread.setDaemon(daemon1);
             }
 
-            if (priority != null) {
-                thread.setPriority(priority);
-            }
-
-            if (uncaughtExceptionHandler != null) {
-                thread.setUncaughtExceptionHandler(uncaughtExceptionHandler);
+            if (uncaughtExceptionHandler1 != null) {
+                thread.setUncaughtExceptionHandler(uncaughtExceptionHandler1);
             }
 
             return thread;
         };
     }
+
 
     private static String format(String format, Object... args) {
         return String.format(Locale.ROOT, format, args);
