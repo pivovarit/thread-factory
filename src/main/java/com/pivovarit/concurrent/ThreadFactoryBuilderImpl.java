@@ -7,7 +7,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicLong;
 
-public final class ThreadFactoryBuilderImpl implements ThreadFactories.ThreadFactoryBuilder {
+final class ThreadFactoryBuilderImpl implements ThreadFactories.ThreadFactoryBuilder {
 
     private final String nameFormat;
 
