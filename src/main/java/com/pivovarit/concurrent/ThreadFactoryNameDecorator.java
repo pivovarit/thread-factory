@@ -3,21 +3,22 @@ package com.pivovarit.concurrent;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
+/**
+ * @author Grzegorz Piwowarek
+ */
 class ThreadFactoryNameDecorator implements ThreadFactory {
 
-    private final ThreadFactory defaultThreadFactory;
+    private final ThreadFactory base;
     private final String prefix;
     private final String suffix;
-
-    // TODO static factory methods
 
     ThreadFactoryNameDecorator(String prefix) {
         this(Executors.defaultThreadFactory(), prefix, "");
     }
 
     ThreadFactoryNameDecorator(ThreadFactory threadFactory, String prefix) {
-        this.defaultThreadFactory = threadFactory;
-        this.prefix = prefix;
+        this.base = threadFactory;
+        this.prefix = prefix != null ? prefix : "";
         this.suffix = "";
     }
 
@@ -25,15 +26,15 @@ class ThreadFactoryNameDecorator implements ThreadFactory {
         this(Executors.defaultThreadFactory(), prefix, suffix);
     }
 
-    private ThreadFactoryNameDecorator(ThreadFactory threadFactory, String prefix, String suffix) {
-        this.defaultThreadFactory = threadFactory;
-        this.prefix = prefix;
-        this.suffix = suffix;
+    ThreadFactoryNameDecorator(ThreadFactory threadFactory, String prefix, String suffix) {
+        this.base = threadFactory;
+        this.prefix = prefix != null ? prefix : "";
+        this.suffix = suffix != null ? suffix : "";
     }
 
     @Override
     public Thread newThread(Runnable task) {
-        Thread thread = defaultThreadFactory.newThread(task);
+        Thread thread = base.newThread(task);
         thread.setName(prefix + "-" + thread.getName() + "-" + suffix);
         return thread;
     }
