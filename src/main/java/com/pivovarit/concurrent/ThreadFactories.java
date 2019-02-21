@@ -92,11 +92,8 @@ public final class ThreadFactories {
 
     public interface ThreadFactoryBuilder {
         ThreadFactoryBuilder withDaemonThreads(boolean daemon);
-
         ThreadFactoryBuilder withUncaughtExceptionHandler(Thread.UncaughtExceptionHandler uncaughtExceptionHandler);
-
         ThreadFactoryBuilder fromThreadFactory(ThreadFactory backingThreadFactory);
-
         ThreadFactory build();
     }
 }
