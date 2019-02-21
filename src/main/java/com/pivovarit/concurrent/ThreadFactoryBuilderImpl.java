@@ -5,6 +5,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -53,7 +54,7 @@ final class ThreadFactoryBuilderImpl implements ThreadFactories.ThreadFactoryBui
 
         return new ThreadFactory() {
 
-            final AtomicLong counter = nameFormat != null ? new AtomicLong(0L) : null;
+            final AtomicInteger counter = nameFormat != null ? new AtomicInteger(0) : null;
 
             @Override
             public Thread newThread(Runnable runnable) {
