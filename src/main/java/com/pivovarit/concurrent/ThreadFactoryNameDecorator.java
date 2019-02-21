@@ -5,7 +5,7 @@ import java.util.concurrent.ThreadFactory;
 
 class ThreadFactoryNameDecorator implements ThreadFactory {
 
-    private final ThreadFactory defaultThreadFactory;
+    private final ThreadFactory base;
     private final String prefix;
     private final String suffix;
 
@@ -14,8 +14,8 @@ class ThreadFactoryNameDecorator implements ThreadFactory {
     }
 
     ThreadFactoryNameDecorator(ThreadFactory threadFactory, String prefix) {
-        this.defaultThreadFactory = threadFactory;
-        this.prefix = prefix;
+        this.base = threadFactory;
+        this.prefix = prefix != null ? prefix : "";
         this.suffix = "";
     }
 
@@ -24,14 +24,14 @@ class ThreadFactoryNameDecorator implements ThreadFactory {
     }
 
     ThreadFactoryNameDecorator(ThreadFactory threadFactory, String prefix, String suffix) {
-        this.defaultThreadFactory = threadFactory;
-        this.prefix = prefix;
-        this.suffix = suffix;
+        this.base = threadFactory;
+        this.prefix = prefix != null ? prefix : "";
+        this.suffix = suffix != null ? suffix : "";
     }
 
     @Override
     public Thread newThread(Runnable task) {
-        Thread thread = defaultThreadFactory.newThread(task);
+        Thread thread = base.newThread(task);
         thread.setName(prefix + "-" + thread.getName() + "-" + suffix);
         return thread;
     }
