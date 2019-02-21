@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicLong;
+
 public final class ThreadFactoryBuilderImpl implements ThreadFactories.ThreadFactoryBuilder {
 
     private final String nameFormat;
@@ -41,29 +42,32 @@ public final class ThreadFactoryBuilderImpl implements ThreadFactories.ThreadFac
      */
     @Override
     public ThreadFactory build() {
-        final String nameFormat1 = nameFormat;
-        final Boolean daemon1 = daemon;
-        final UncaughtExceptionHandler uncaughtExceptionHandler1 = uncaughtExceptionHandler;
-        final ThreadFactory backingThreadFactory1 = backingThreadFactory != null ? backingThreadFactory : Executors.defaultThreadFactory();
-        final AtomicLong count = nameFormat1 != null ? new AtomicLong(0L) : null;
-        return runnable -> {
-            Thread thread = backingThreadFactory1.newThread(runnable);
-            if (nameFormat1 != null) {
-                thread.setName(ThreadFactoryBuilderImpl.format(nameFormat1, count.getAndIncrement()));
-            }
+        final String nameFormat = this.nameFormat;
+        final Boolean isDaemon = daemon;
+        final UncaughtExceptionHandler uncaughtExceptionHandler = this.uncaughtExceptionHandler;
+        final ThreadFactory threadFactory = backingThreadFactory != null ? backingThreadFactory : Executors
+          .defaultThreadFactory();
+        final AtomicLong count = nameFormat != null ? new AtomicLong(0L) : null;
+        return new ThreadFactory() {
+            @Override
+            public Thread newThread(Runnable runnable) {
+                Thread thread = threadFactory.newThread(runnable);
+                if (nameFormat != null) {
+                    thread.setName(ThreadFactoryBuilderImpl.format(nameFormat, count.getAndIncrement()));
+                }
 
-            if (daemon1 != null) {
-                thread.setDaemon(daemon1);
-            }
+                if (isDaemon != null) {
+                    thread.setDaemon(isDaemon);
+                }
 
-            if (uncaughtExceptionHandler1 != null) {
-                thread.setUncaughtExceptionHandler(uncaughtExceptionHandler1);
-            }
+                if (uncaughtExceptionHandler != null) {
+                    thread.setUncaughtExceptionHandler(uncaughtExceptionHandler);
+                }
 
-            return thread;
+                return thread;
+            }
         };
     }
-
 
     private static String format(String format, Object... args) {
         return String.format(Locale.ROOT, format, args);
