@@ -6,26 +6,73 @@ public final class ThreadFactories {
     private ThreadFactories() {
     }
 
+    /**
+     * @param prefix
+     *
+     * @return
+     *
+     * @since 0.0.1
+     */
     public ThreadFactory prefixed(String prefix) {
         return new ThreadFactoryNameDecorator(prefix);
     }
 
+    /**
+     * @param prefix
+     * @param threadFactory
+     *
+     * @return
+     *
+     * @since 0.0.1
+     */
     public ThreadFactory prefixed(String prefix, ThreadFactory threadFactory) {
         return new ThreadFactoryNameDecorator(threadFactory, prefix);
     }
 
+    /**
+     * @param suffix
+     *
+     * @return
+     *
+     * @since 0.0.1
+     */
     public ThreadFactory suffixed(String suffix) {
         return new ThreadFactoryNameDecorator("", suffix);
     }
 
+    /**
+     * @param suffix
+     * @param threadFactory
+     *
+     * @return
+     *
+     * @since 0.0.1
+     */
     public ThreadFactory suffixed(String suffix, ThreadFactory threadFactory) {
         return new ThreadFactoryNameDecorator(threadFactory, "", suffix);
     }
 
+    /**
+     * @param prefix
+     * @param suffix
+     *
+     * @return
+     *
+     * @since 0.0.1
+     */
     public ThreadFactory named(String prefix, String suffix) {
         return new ThreadFactoryNameDecorator(prefix, suffix);
     }
 
+    /**
+     * @param threadFactory
+     * @param prefix
+     * @param suffix
+     *
+     * @return
+     *
+     * @since 0.0.1
+     */
     public ThreadFactory named(ThreadFactory threadFactory, String prefix, String suffix) {
         return new ThreadFactoryNameDecorator(threadFactory, prefix, suffix);
     }
