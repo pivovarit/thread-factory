@@ -34,6 +34,9 @@ public final class ThreadFactoryBuilder {
         return this;
     }
 
+    /**
+     * @implNote Linux/OSX give all threads the same priority
+     */
     public ThreadFactory build() {
         final String nameFormat1 = nameFormat;
         final Boolean daemon1 = daemon;
