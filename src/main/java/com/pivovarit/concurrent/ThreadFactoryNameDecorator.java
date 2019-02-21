@@ -9,8 +9,6 @@ class ThreadFactoryNameDecorator implements ThreadFactory {
     private final String prefix;
     private final String suffix;
 
-    // TODO static factory methods
-
     ThreadFactoryNameDecorator(String prefix) {
         this(Executors.defaultThreadFactory(), prefix, "");
     }
@@ -25,7 +23,7 @@ class ThreadFactoryNameDecorator implements ThreadFactory {
         this(Executors.defaultThreadFactory(), prefix, suffix);
     }
 
-    private ThreadFactoryNameDecorator(ThreadFactory threadFactory, String prefix, String suffix) {
+    ThreadFactoryNameDecorator(ThreadFactory threadFactory, String prefix, String suffix) {
         this.defaultThreadFactory = threadFactory;
         this.prefix = prefix;
         this.suffix = suffix;

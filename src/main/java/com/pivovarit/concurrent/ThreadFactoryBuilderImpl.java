@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicLong;
-public final class ThreadFactoryBuilder {
+public final class ThreadFactoryBuilderImpl implements ThreadFactories.ThreadFactoryBuilder {
 
     private final String nameFormat;
 
@@ -14,21 +14,24 @@ public final class ThreadFactoryBuilder {
     private UncaughtExceptionHandler uncaughtExceptionHandler = null;
     private ThreadFactory backingThreadFactory = null;
 
-    public ThreadFactoryBuilder(String nameFormat) {
+    ThreadFactoryBuilderImpl(String nameFormat) {
         this.nameFormat = nameFormat;
     }
 
-    public ThreadFactoryBuilder setDaemon(boolean daemon) {
+    @Override
+    public ThreadFactories.ThreadFactoryBuilder withDaemonThreads(boolean daemon) {
         this.daemon = daemon;
         return this;
     }
 
-    public ThreadFactoryBuilder setUncaughtExceptionHandler(UncaughtExceptionHandler uncaughtExceptionHandler) {
+    @Override
+    public ThreadFactories.ThreadFactoryBuilder withUncaughtExceptionHandler(UncaughtExceptionHandler uncaughtExceptionHandler) {
         this.uncaughtExceptionHandler = Objects.requireNonNull(uncaughtExceptionHandler);
         return this;
     }
 
-    public ThreadFactoryBuilder setThreadFactory(ThreadFactory backingThreadFactory) {
+    @Override
+    public ThreadFactories.ThreadFactoryBuilder fromThreadFactory(ThreadFactory backingThreadFactory) {
         this.backingThreadFactory = Objects.requireNonNull((backingThreadFactory));
         return this;
     }
@@ -36,6 +39,7 @@ public final class ThreadFactoryBuilder {
     /**
      * @implNote Linux/OSX give all threads the same priority
      */
+    @Override
     public ThreadFactory build() {
         final String nameFormat1 = nameFormat;
         final Boolean daemon1 = daemon;
@@ -45,7 +49,7 @@ public final class ThreadFactoryBuilder {
         return runnable -> {
             Thread thread = backingThreadFactory1.newThread(runnable);
             if (nameFormat1 != null) {
-                thread.setName(ThreadFactoryBuilder.format(nameFormat1, count.getAndIncrement()));
+                thread.setName(ThreadFactoryBuilderImpl.format(nameFormat1, count.getAndIncrement()));
             }
 
             if (daemon1 != null) {
