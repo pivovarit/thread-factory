@@ -19,7 +19,7 @@ final class ThreadFactoryBuilderImpl implements ThreadFactories.ThreadFactoryBui
     private ThreadFactory backingThreadFactory = null;
 
     ThreadFactoryBuilderImpl(String nameFormat) {
-        this.nameFormat = nameFormat;
+        this.nameFormat = nameFormat != null ? nameFormat : "";
     }
 
     @Override
