@@ -3,6 +3,9 @@ package com.pivovarit.concurrent;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
+/**
+ * @author Grzegorz Piwowarek
+ */
 class ThreadFactoryNameDecorator implements ThreadFactory {
 
     private final ThreadFactory base;

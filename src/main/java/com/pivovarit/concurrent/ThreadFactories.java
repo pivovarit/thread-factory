@@ -2,6 +2,9 @@ package com.pivovarit.concurrent;
 
 import java.util.concurrent.ThreadFactory;
 
+/**
+ * @author Grzegorz Piwowarek
+ */
 public final class ThreadFactories {
     private ThreadFactories() {
     }
@@ -65,8 +68,8 @@ public final class ThreadFactories {
      *
      * @since 0.0.1
      */
-    public static ThreadFactory named(String prefix, String suffix) {
-        return new ThreadFactoryNameDecorator(prefix, suffix);
+    public static ThreadFactory named(String nameFormat) {
+        return builder(nameFormat).build();
     }
 
     /**

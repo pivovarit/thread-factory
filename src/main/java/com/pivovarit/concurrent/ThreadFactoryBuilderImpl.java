@@ -7,6 +7,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * @author Grzegorz Piwowarek
+ */
 final class ThreadFactoryBuilderImpl implements ThreadFactories.ThreadFactoryBuilder {
 
     private final String nameFormat;
@@ -47,13 +50,16 @@ final class ThreadFactoryBuilderImpl implements ThreadFactories.ThreadFactoryBui
         final UncaughtExceptionHandler uncaughtExceptionHandler = this.uncaughtExceptionHandler;
         final ThreadFactory threadFactory = backingThreadFactory != null ? backingThreadFactory : Executors
           .defaultThreadFactory();
-        final AtomicLong count = nameFormat != null ? new AtomicLong(0L) : null;
+
         return new ThreadFactory() {
+
+            final AtomicLong counter = nameFormat != null ? new AtomicLong(0L) : null;
+
             @Override
             public Thread newThread(Runnable runnable) {
                 Thread thread = threadFactory.newThread(runnable);
                 if (nameFormat != null) {
-                    thread.setName(ThreadFactoryBuilderImpl.format(nameFormat, count.getAndIncrement()));
+                    thread.setName(ThreadFactoryBuilderImpl.format(nameFormat, counter.getAndIncrement()));
                 }
 
                 if (isDaemon != null) {
