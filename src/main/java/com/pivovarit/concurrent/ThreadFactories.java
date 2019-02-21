@@ -14,7 +14,7 @@ public final class ThreadFactories {
      *
      * @since 0.0.1
      */
-    public ThreadFactory prefixed(String prefix) {
+    public static ThreadFactory prefixed(String prefix) {
         return new ThreadFactoryNameDecorator(prefix);
     }
 
@@ -27,7 +27,7 @@ public final class ThreadFactories {
      *
      * @since 0.0.1
      */
-    public ThreadFactory prefixed(String prefix, ThreadFactory threadFactory) {
+    public static ThreadFactory prefixed(String prefix, ThreadFactory threadFactory) {
         return new ThreadFactoryNameDecorator(threadFactory, prefix);
     }
 
@@ -39,7 +39,7 @@ public final class ThreadFactories {
      *
      * @since 0.0.1
      */
-    public ThreadFactory suffixed(String suffix) {
+    public static ThreadFactory suffixed(String suffix) {
         return new ThreadFactoryNameDecorator("", suffix);
     }
 
@@ -52,7 +52,7 @@ public final class ThreadFactories {
      *
      * @since 0.0.1
      */
-    public ThreadFactory suffixed(String suffix, ThreadFactory threadFactory) {
+    public static ThreadFactory suffixed(String suffix, ThreadFactory threadFactory) {
         return new ThreadFactoryNameDecorator(threadFactory, "", suffix);
     }
 
@@ -65,7 +65,7 @@ public final class ThreadFactories {
      *
      * @since 0.0.1
      */
-    public ThreadFactory named(String prefix, String suffix) {
+    public static ThreadFactory named(String prefix, String suffix) {
         return new ThreadFactoryNameDecorator(prefix, suffix);
     }
 
@@ -79,11 +79,11 @@ public final class ThreadFactories {
      *
      * @since 0.0.1
      */
-    public ThreadFactory named(ThreadFactory threadFactory, String prefix, String suffix) {
+    public static ThreadFactory named(ThreadFactory threadFactory, String prefix, String suffix) {
         return new ThreadFactoryNameDecorator(threadFactory, prefix, suffix);
     }
 
-    public ThreadFactoryBuilder builder(String nameFormat) {
+    public static ThreadFactoryBuilder builder(String nameFormat) {
         return new ThreadFactoryBuilderImpl(nameFormat);
     }
 
