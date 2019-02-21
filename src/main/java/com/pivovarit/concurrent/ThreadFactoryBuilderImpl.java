@@ -3,23 +3,26 @@ package com.pivovarit.concurrent;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static java.util.concurrent.Executors.*;
 
 /**
  * @author Grzegorz Piwowarek
  */
 final class ThreadFactoryBuilderImpl implements ThreadFactories.ThreadFactoryBuilder {
 
+    private static final String DEFAULT_PATTERN = "thread-%d";
+
     private final String nameFormat;
 
     private Boolean daemon = null;
     private UncaughtExceptionHandler uncaughtExceptionHandler = null;
-    private ThreadFactory backingThreadFactory = null;
+    private ThreadFactory base = null;
 
     ThreadFactoryBuilderImpl(String nameFormat) {
-        this.nameFormat = nameFormat != null ? nameFormat : "";
+        this.nameFormat = (nameFormat != null) && !nameFormat.isEmpty() ? nameFormat : DEFAULT_PATTERN;
     }
 
     @Override
@@ -36,7 +39,7 @@ final class ThreadFactoryBuilderImpl implements ThreadFactories.ThreadFactoryBui
 
     @Override
     public ThreadFactories.ThreadFactoryBuilder fromThreadFactory(ThreadFactory backingThreadFactory) {
-        this.backingThreadFactory = Objects.requireNonNull((backingThreadFactory));
+        this.base = Objects.requireNonNull((backingThreadFactory));
         return this;
     }
 
@@ -45,22 +48,20 @@ final class ThreadFactoryBuilderImpl implements ThreadFactories.ThreadFactoryBui
      */
     @Override
     public ThreadFactory build() {
+        final ThreadFactory threadFactory = base != null ? base : defaultThreadFactory();
         final String nameFormat = this.nameFormat;
+
         final Boolean isDaemon = daemon;
         final UncaughtExceptionHandler uncaughtExceptionHandler = this.uncaughtExceptionHandler;
-        final ThreadFactory threadFactory = backingThreadFactory != null ? backingThreadFactory : Executors
-          .defaultThreadFactory();
 
         return new ThreadFactory() {
 
-            final AtomicInteger counter = nameFormat != null ? new AtomicInteger(0) : null;
+            final AtomicInteger counter = new AtomicInteger(0);
 
             @Override
             public Thread newThread(Runnable runnable) {
                 Thread thread = threadFactory.newThread(runnable);
-                if (nameFormat != null) {
-                    thread.setName(ThreadFactoryBuilderImpl.format(nameFormat, counter.getAndIncrement()));
-                }
+                thread.setName(String.format(Locale.ROOT, nameFormat, counter.getAndIncrement()));
 
                 if (isDaemon != null) {
                     thread.setDaemon(isDaemon);
@@ -73,10 +74,6 @@ final class ThreadFactoryBuilderImpl implements ThreadFactories.ThreadFactoryBui
                 return thread;
             }
         };
-    }
-
-    private static String format(String format, Object... args) {
-        return String.format(Locale.ROOT, format, args);
     }
 }
 
