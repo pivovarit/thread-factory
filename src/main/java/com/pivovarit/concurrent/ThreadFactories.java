@@ -1,5 +1,6 @@
 package com.pivovarit.concurrent;
 
+import java.util.Objects;
 import java.util.concurrent.ThreadFactory;
 
 /**
@@ -10,7 +11,7 @@ public final class ThreadFactories {
     }
 
     /**
-     * TODO description
+     * Returns a default {@link ThreadFactory} creating threads with custom name prefix
      *
      * @param prefix
      *
@@ -19,6 +20,7 @@ public final class ThreadFactories {
      * @since 0.0.1
      */
     public static ThreadFactory prefixed(String prefix) {
+        Objects.requireNonNull(prefix, "prefix can't be null");
         return new ThreadFactoryNameDecorator(prefix);
     }
 
@@ -33,6 +35,9 @@ public final class ThreadFactories {
      * @since 0.0.1
      */
     public static ThreadFactory prefixed(String prefix, ThreadFactory threadFactory) {
+        Objects.requireNonNull(threadFactory, "threadFactory can't be null");
+        Objects.requireNonNull(prefix, "prefix can't be null");
+
         return new ThreadFactoryNameDecorator(threadFactory, prefix);
     }
 
@@ -46,6 +51,8 @@ public final class ThreadFactories {
      * @since 0.0.1
      */
     public static ThreadFactory suffixed(String suffix) {
+        Objects.requireNonNull(suffix, "suffix can't be null");
+
         return new ThreadFactoryNameDecorator("", suffix);
     }
 
@@ -60,6 +67,9 @@ public final class ThreadFactories {
      * @since 0.0.1
      */
     public static ThreadFactory suffixed(String suffix, ThreadFactory threadFactory) {
+        Objects.requireNonNull(threadFactory, "threadFactory can't be null");
+        Objects.requireNonNull(suffix, "suffix can't be null");
+
         return new ThreadFactoryNameDecorator(threadFactory, "", suffix);
     }
 
@@ -73,6 +83,7 @@ public final class ThreadFactories {
      * @since 0.0.1
      */
     public static ThreadFactory named(String nameFormat) {
+        Objects.requireNonNull(nameFormat, "nameFormat can't be null");
         return builder(nameFormat).build();
     }
 
@@ -88,6 +99,10 @@ public final class ThreadFactories {
      * @since 0.0.1
      */
     public static ThreadFactory named(ThreadFactory threadFactory, String prefix, String suffix) {
+        Objects.requireNonNull(threadFactory, "threadFactory can't be null");
+        Objects.requireNonNull(prefix, "prefix can't be null");
+        Objects.requireNonNull(suffix, "suffix can't be null");
+
         return new ThreadFactoryNameDecorator(threadFactory, prefix, suffix);
     }
 
@@ -97,8 +112,11 @@ public final class ThreadFactories {
 
     public interface ThreadFactoryBuilder {
         ThreadFactoryBuilder withDaemonThreads(boolean daemon);
+
         ThreadFactoryBuilder withUncaughtExceptionHandler(Thread.UncaughtExceptionHandler uncaughtExceptionHandler);
+
         ThreadFactoryBuilder fromThreadFactory(ThreadFactory backingThreadFactory);
+
         ThreadFactory build();
     }
 }
