@@ -20,9 +20,7 @@ class ThreadFactoryNameDecorator implements ThreadFactory {
     }
 
     ThreadFactoryNameDecorator(ThreadFactory threadFactory, String prefix) {
-        this.base = threadFactory;
-        this.prefix = prefix != null ? prefix : EMPTY;
-        this.suffix = EMPTY;
+        this(threadFactory, prefix, null);
     }
 
     ThreadFactoryNameDecorator(String prefix, String suffix) {
@@ -31,14 +29,14 @@ class ThreadFactoryNameDecorator implements ThreadFactory {
 
     ThreadFactoryNameDecorator(ThreadFactory threadFactory, String prefix, String suffix) {
         this.base = threadFactory;
-        this.prefix = prefix != null ? prefix : EMPTY;
+        this.prefix = prefix != null ? prefix + SEPARATOR : EMPTY;
         this.suffix = suffix != null ? SEPARATOR + suffix : EMPTY;
     }
 
     @Override
     public Thread newThread(Runnable task) {
         Thread thread = base.newThread(task);
-        thread.setName(prefix + SEPARATOR + thread.getName() + suffix);
+        thread.setName(prefix + thread.getName() + suffix);
         return thread;
     }
 }
