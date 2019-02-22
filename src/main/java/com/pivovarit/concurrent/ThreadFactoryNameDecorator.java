@@ -8,18 +8,21 @@ import java.util.concurrent.ThreadFactory;
  */
 class ThreadFactoryNameDecorator implements ThreadFactory {
 
+    private static final String SEPARATOR = "-";
+    private static final String EMPTY = "";
+
     private final ThreadFactory base;
     private final String prefix;
     private final String suffix;
 
     ThreadFactoryNameDecorator(String prefix) {
-        this(Executors.defaultThreadFactory(), prefix, "");
+        this(Executors.defaultThreadFactory(), prefix, EMPTY);
     }
 
     ThreadFactoryNameDecorator(ThreadFactory threadFactory, String prefix) {
         this.base = threadFactory;
-        this.prefix = prefix != null ? prefix : "";
-        this.suffix = "";
+        this.prefix = prefix != null ? prefix : EMPTY;
+        this.suffix = EMPTY;
     }
 
     ThreadFactoryNameDecorator(String prefix, String suffix) {
@@ -28,14 +31,14 @@ class ThreadFactoryNameDecorator implements ThreadFactory {
 
     ThreadFactoryNameDecorator(ThreadFactory threadFactory, String prefix, String suffix) {
         this.base = threadFactory;
-        this.prefix = prefix != null ? prefix : "";
-        this.suffix = suffix != null ? suffix : "";
+        this.prefix = prefix != null ? prefix : EMPTY;
+        this.suffix = suffix != null ? SEPARATOR + suffix : EMPTY;
     }
 
     @Override
     public Thread newThread(Runnable task) {
         Thread thread = base.newThread(task);
-        thread.setName(prefix + "-" + thread.getName() + "-" + suffix);
+        thread.setName(prefix + SEPARATOR + thread.getName() + suffix);
         return thread;
     }
 }
