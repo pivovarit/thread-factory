@@ -70,42 +70,14 @@ public final class ThreadFactories {
         Objects.requireNonNull(threadFactory, "threadFactory can't be null");
         Objects.requireNonNull(suffix, "suffix can't be null");
 
-        return new ThreadFactoryNameDecorator(threadFactory, "", suffix);
+        return new ThreadFactoryNameDecorator(threadFactory, null, suffix);
     }
 
     /**
-     * TODO description
-     *
      * @param nameFormat
      *
      * @return
-     *
-     * @since 0.0.1
      */
-    public static ThreadFactory named(String nameFormat) {
-        Objects.requireNonNull(nameFormat, "nameFormat can't be null");
-        return builder(nameFormat).build();
-    }
-
-    /**
-     * TODO description
-     *
-     * @param threadFactory
-     * @param prefix
-     * @param suffix
-     *
-     * @return
-     *
-     * @since 0.0.1
-     */
-    public static ThreadFactory named(ThreadFactory threadFactory, String prefix, String suffix) {
-        Objects.requireNonNull(threadFactory, "threadFactory can't be null");
-        Objects.requireNonNull(prefix, "prefix can't be null");
-        Objects.requireNonNull(suffix, "suffix can't be null");
-
-        return new ThreadFactoryNameDecorator(threadFactory, prefix, suffix);
-    }
-
     public static ThreadFactoryBuilder builder(String nameFormat) {
         return new ThreadFactoryBuilderImpl(nameFormat);
     }

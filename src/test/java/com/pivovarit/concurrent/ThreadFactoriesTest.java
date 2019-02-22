@@ -36,6 +36,45 @@ class ThreadFactoriesTest {
     }
 
     @Test
+    void shouldSuffixThreadName_customFactory() {
+        // given
+        final String suffix = "foo";
+        final String name = "name";
+
+        ThreadFactory tf = ThreadFactories.suffixed(suffix, r -> new Thread(name));
+
+        // when
+        Thread thread = tf.newThread(NOOP);
+
+        // then
+        assertThat(thread.getName()).isEqualTo(name + "-" + suffix);
+    }
+
+    @Test
+    void shouldSuffixAndThrowException_defaultFactory() {
+        assertThatThrownBy(() -> ThreadFactories.suffixed(null)).isInstanceOf(NullPointerException.class);
+    }
+
+
+    @Test
+    void shouldSuffixAndThrowException_customFactory() {
+        assertThatThrownBy(() -> ThreadFactories.suffixed(null, r -> new Thread())).isInstanceOf(NullPointerException.class);
+    }
+
+    @Test
+    void shouldSuffixThreadName_defaultFactory() {
+        // given
+        final String suffix = "foo";
+        final ThreadFactory tf = ThreadFactories.suffixed(suffix);
+
+        // when
+        Thread thread = tf.newThread(NOOP);
+
+        // then
+        assertThat(thread.getName()).endsWith(suffix);
+    }
+
+    @Test
     void shouldPrefixThreadName_customFactory() {
         // given
         final String prefix = "foo";
