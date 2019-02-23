@@ -12,6 +12,8 @@
 
 ### Examples
 
+
+
 ### Tips
 
 ### Dependencies
@@ -20,7 +22,36 @@ None - the library is implemented using core Java libraries.
 
 ## Version history
 
-### TODO 0.0.1-SNAPSHOT (23-01-2019)
+### TODO 0.0.1 (23-01-2019)
 
 * MVP
+
+#### What if I don't want to add a new library just for the sake of using one class?
+
+That's reasonable. Just copy over the following code:
+
+```
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+
+/**
+ * @author Grzegorz Piwowarek
+ */
+public class CustomThreadFactory implements ThreadFactory {
+
+    private String prefix;
+    private ThreadFactory defaultThreadFactory = Executors.defaultThreadFactory();
+
+    CustomThreadFactory(String prefix) {
+        this.prefix = prefix;
+    }
+
+    @Override
+    public Thread newThread(Runnable task) {
+        Thread thread = defaultThreadFactory.newThread(task);
+        thread.setName(prefix + "-" + thread.getName());
+        return thread;
+    }
+}
+```
 
