@@ -12,9 +12,10 @@ public final class ThreadFactories {
     }
 
     /**
-     * Returns a default {@link ThreadFactory} creating threads with custom name prefix
+     * Returns a decdefault {@link ThreadFactory} featuring names decorated with a given prefix.
+     * For example, if a default name is "name" and provided prefix is "prefix", the resulting name will be "prefix-name"
      *
-     * @param prefix
+     * @param prefix a custom String to be appended before the default name
      *
      * @return
      *
@@ -26,7 +27,8 @@ public final class ThreadFactories {
     }
 
     /**
-     * TODO description
+     * Returns a default {@link ThreadFactory} featuring names decorated with a given prefix.
+     * For example, if a default name is "name" and provided prefix is "prefix", the resulting name will be "prefix-name"
      *
      * @param prefix
      * @param threadFactory
