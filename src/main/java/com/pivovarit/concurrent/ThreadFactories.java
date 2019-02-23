@@ -34,7 +34,6 @@ public final class ThreadFactories {
      * @param threadFactory a ThreadFactory instance to be used as a base
      *
      * @return a customized ThreadFactory instance
-
      *
      * @since 0.0.1
      */
@@ -46,12 +45,12 @@ public final class ThreadFactories {
     }
 
     /**
-     * TODO description
+     * Returns a default {@link ThreadFactory} creating threads with names decorated with a given suffix.
+     * For example, if a name assigned by the thread factory is "name" and provided suffix is "suffix", the resulting name will be "name-suffix"
      *
      * @param suffix a custom String to be appended after the default name
      *
      * @return a customized ThreadFactory instance
-
      *
      * @since 0.0.1
      */
@@ -62,13 +61,13 @@ public final class ThreadFactories {
     }
 
     /**
-     * TODO description
+     * Returns a provided {@link ThreadFactory} creating threads with names decorated with a given suffix.
+     * For example, if a name assigned by the thread factory is "name" and provided suffix is "suffix", the resulting name will be "name-suffix"
      *
      * @param suffix        a custom String to be appended after the default name
      * @param threadFactory a ThreadFactory instance to be used as a base
      *
      * @return a customized ThreadFactory instance
-
      *
      * @since 0.0.1
      */
@@ -80,10 +79,12 @@ public final class ThreadFactories {
     }
 
     /**
-     * @param nameFormat
+     * Returning a ThreadFactoryBuilder instance preconfigured to use a custom naming scheme.
+     * If a provided {@code nameFormat} is "pool-%d", the factory will create threads named: "pool-0", "pool-1", "pool-2", etc
+     *
+     * @param nameFormat a custom name format which needs to feature exactly one "%d" specifier. For example "pool-%d"
      *
      * @return a customized ThreadFactory instance
-
      *
      * @since 0.0.1
      */
@@ -96,18 +97,20 @@ public final class ThreadFactories {
      */
     public interface ThreadFactoryBuilder {
         /**
-         * @param daemon
+         * @param daemon whether or not new Threads created with this ThreadFactory
+         *               will be daemon threads
          *
-         * @return
+         * @return a ThreadFactoryBuilder instance
          *
          * @since 0.0.1
          */
         ThreadFactoryBuilder withDaemonThreads(boolean daemon);
 
         /**
-         * @param uncaughtExceptionHandler
+         * @param uncaughtExceptionHandler the uncaught exception handler for new
+         *                                 Threads created with this ThreadFactory
          *
-         * @return
+         * @return a ThreadFactoryBuilder instance
          *
          * @since 0.0.1
          */
@@ -116,7 +119,7 @@ public final class ThreadFactories {
         /**
          * @param backingThreadFactory a ThreadFactory instance to be used as a base
          *
-         * @return
+         * @return a ThreadFactoryBuilder instance
          *
          * @since 0.0.1
          */
