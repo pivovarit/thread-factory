@@ -10,6 +10,17 @@
 
 ### Maven Dependencies
 
+    <dependency>
+        <groupId>com.pivovarit</groupId>
+        <artifactId>thread-factory</artifactId>
+        <version>0.0.1</version>
+    </dependency>
+
+
+##### Gradle
+
+    compile 'com.pivovarit:thread-factory:0.0.1'
+
 ### Examples
 
 
@@ -22,9 +33,9 @@ None - the library is implemented using core Java libraries.
 
 ## Version history
 
-### TODO 0.0.1 (23-01-2019)
+### (0.0.1)[https://github.com/pivovarit/thread-factory/releases/tag/0.0.1] (23-01-2019)
 
-* MVP
+* Initial project version
 
 #### What if I don't want to add a new library just for the sake of using one class?
 
