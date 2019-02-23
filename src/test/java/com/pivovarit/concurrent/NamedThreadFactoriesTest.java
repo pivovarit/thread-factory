@@ -7,7 +7,7 @@ import java.util.concurrent.ThreadFactory;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class ThreadFactoriesTest {
+class NamedThreadFactoriesTest {
 
     private static final Runnable NOOP = () -> { };
 

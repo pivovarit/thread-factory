@@ -5,6 +5,7 @@ import java.util.concurrent.ThreadFactory;
 
 /**
  * @author Grzegorz Piwowarek
+ * @since 0.0.1
  */
 public final class ThreadFactories {
     private ThreadFactories() {
@@ -77,18 +78,51 @@ public final class ThreadFactories {
      * @param nameFormat
      *
      * @return
+     *
+     * @since 0.0.1
      */
     public static ThreadFactoryBuilder builder(String nameFormat) {
         return new ThreadFactoryBuilderImpl(nameFormat);
     }
 
+    /**
+     * @since 0.0.1
+     */
     public interface ThreadFactoryBuilder {
+        /**
+         * @param daemon
+         *
+         * @return
+         *
+         * @since 0.0.1
+         */
         ThreadFactoryBuilder withDaemonThreads(boolean daemon);
 
+        /**
+         * @param uncaughtExceptionHandler
+         *
+         * @return
+         *
+         * @since 0.0.1
+         */
         ThreadFactoryBuilder withUncaughtExceptionHandler(Thread.UncaughtExceptionHandler uncaughtExceptionHandler);
 
+        /**
+         * @param backingThreadFactory
+         *
+         * @return
+         *
+         * @since 0.0.1
+         */
         ThreadFactoryBuilder fromThreadFactory(ThreadFactory backingThreadFactory);
 
+        /**
+         * Returns a new thread factory based on settings provided during building
+         *
+         * @return the fully constructed {@link ThreadFactory}
+         *
+         * @since 0.0.1
+         */
         ThreadFactory build();
     }
 }
