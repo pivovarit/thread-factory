@@ -63,4 +63,23 @@ class ThreadFactoryBuilderTest {
         assertThat(thread1.getName()).isEqualTo("0");
         assertThat(thread2.getName()).isEqualTo("1");
     }
+
+    @Test
+    void shouldUseProvidedThreadFactoryAsBase() {
+        // given
+        Thread.UncaughtExceptionHandler uncaughtExceptionHandler = (t, e) -> { };
+
+        ThreadFactory tf = ThreadFactories.builder("%d")
+          .withDaemonThreads(true)
+          .withUncaughtExceptionHandler(uncaughtExceptionHandler)
+          .build();
+
+        // when
+        ThreadFactory derived = ThreadFactories.builder("%d")
+          .fromThreadFactory(tf)
+          .build();
+
+        // then
+        assertThat(derived.newThread(() -> {}).getUncaughtExceptionHandler()).isEqualTo(uncaughtExceptionHandler);
+    }
 }
