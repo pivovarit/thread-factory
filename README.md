@@ -33,13 +33,13 @@ None - the library is implemented using core Java libraries.
 
 ## Version history
 
-### (0.0.1)[https://github.com/pivovarit/thread-factory/releases/tag/0.0.1] (23-01-2019)
+### [0.0.1](https://github.com/pivovarit/thread-factory/releases/tag/0.0.1) (23-01-2019)
 
 * Initial project version
 
-#### What if I don't want to add a new library just for the sake of using one class?
+#### What if I don't want to add a new library just for the sake of prefixing threads?
 
-That's reasonable. Just copy over the following code:
+That's reasonable. Just copy over the following code and use at will:
 
 ```
 import java.util.concurrent.Executors;
