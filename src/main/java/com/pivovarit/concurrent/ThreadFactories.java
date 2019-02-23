@@ -12,12 +12,12 @@ public final class ThreadFactories {
     }
 
     /**
-     * Returns a decdefault {@link ThreadFactory} featuring names decorated with a given prefix.
-     * For example, if a default name is "name" and provided prefix is "prefix", the resulting name will be "prefix-name"
+     * Returns a default {@link ThreadFactory} creating threads with names decorated with a given prefix.
+     * For example, if a name assigned by the thread factory is "name" and provided prefix is "prefix", the resulting name will be "prefix-name"
      *
      * @param prefix a custom String to be appended before the default name
      *
-     * @return
+     * @return a customized ThreadFactory instance
      *
      * @since 0.0.1
      */
@@ -27,13 +27,14 @@ public final class ThreadFactories {
     }
 
     /**
-     * Returns a default {@link ThreadFactory} featuring names decorated with a given prefix.
-     * For example, if a default name is "name" and provided prefix is "prefix", the resulting name will be "prefix-name"
+     * Returns a provided {@link ThreadFactory} creating threads with names decorated with a given prefix.
+     * For example, if a name assigned by the thread factory is "name" and provided prefix is "prefix", the resulting name will be "prefix-name"
      *
-     * @param prefix
-     * @param threadFactory
+     * @param prefix        a custom String to be appended before the default name
+     * @param threadFactory a ThreadFactory instance to be used as a base
      *
-     * @return
+     * @return a customized ThreadFactory instance
+
      *
      * @since 0.0.1
      */
@@ -47,9 +48,10 @@ public final class ThreadFactories {
     /**
      * TODO description
      *
-     * @param suffix
+     * @param suffix a custom String to be appended after the default name
      *
-     * @return
+     * @return a customized ThreadFactory instance
+
      *
      * @since 0.0.1
      */
@@ -62,10 +64,11 @@ public final class ThreadFactories {
     /**
      * TODO description
      *
-     * @param suffix
-     * @param threadFactory
+     * @param suffix        a custom String to be appended after the default name
+     * @param threadFactory a ThreadFactory instance to be used as a base
      *
-     * @return
+     * @return a customized ThreadFactory instance
+
      *
      * @since 0.0.1
      */
@@ -79,7 +82,8 @@ public final class ThreadFactories {
     /**
      * @param nameFormat
      *
-     * @return
+     * @return a customized ThreadFactory instance
+
      *
      * @since 0.0.1
      */
@@ -110,7 +114,7 @@ public final class ThreadFactories {
         ThreadFactoryBuilder withUncaughtExceptionHandler(Thread.UncaughtExceptionHandler uncaughtExceptionHandler);
 
         /**
-         * @param backingThreadFactory
+         * @param backingThreadFactory a ThreadFactory instance to be used as a base
          *
          * @return
          *
