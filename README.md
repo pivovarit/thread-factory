@@ -10,7 +10,7 @@ Custom thread pool naming is critical for debuggability.
 
 Unfortunately, relying on default naming schemes often leads to situations where most of our threads are named like:
 
-[[https://github.com/pivovarit/thread-factory/blob/master/docs/img/threads.png]]
+[https://github.com/pivovarit/thread-factory/blob/master/docs/img/threads.png]
 
 
 ## Basic API
