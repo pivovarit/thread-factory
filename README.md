@@ -6,7 +6,26 @@
 
 ## Rationale
 
+Custom thread pool naming is critical for debuggability. 
+
+Unfortunately, relying on default naming schemes often leads to situations where most of our threads are named like:
+
+[[https://github.com/pivovarit/thread-factory/blob/master/docs/img/threads.png|alt=octocat]]
+
+
 ## Basic API
+
+- `ThreadFactories.prefixed(String prefix)`
+- `ThreadFactories.prefixed(String prefix, ThreadFactory base)`
+- `ThreadFactories.suffixed(String suffix)`
+- `ThreadFactories.suffixed(String suffix, ThreadFactory base)`
+
+
+- `ThreadFactories.builder(String nameFormat)`
+    - `withDaemonThreads(boolean daemon)`
+    - `withUncaughtExceptionHandler(UncaughtExceptionHandler handler)`
+    - `fromThreadFactory(ThreadFactory backingThreadFactory)`
+    - `build()`
 
 ### Maven Dependencies
 
