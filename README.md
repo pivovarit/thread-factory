@@ -8,9 +8,11 @@
 
 Custom thread pool naming is critical for debuggability. 
 
-Unfortunately, relying on default naming schemes often leads to situations where most of our threads are named like:
+Unfortunately, relying on default naming schemes often leads to situations where most of our threads are named in a cryptic manner:
 
-[[https://github.com/pivovarit/thread-factory/blob/master/docs/img/threads.png|alt=octocat]]
+![Alt text](/docs/img/threads.png?raw=true)
+
+Using core Java, there's no easy way to create custom ThreadFactory instances.
 
 
 ## Basic API
